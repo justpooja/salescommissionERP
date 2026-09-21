@@ -17,11 +17,14 @@ SECRET_KEY = os.getenv(
     'django-insecure-local-development-key'
 )
 
-DEBUG = os.getenv('DEBUG', 'True').lower() == 'true'
+DEBUG = os.getenv('DEBUG', 'False').lower() == 'true'
 
 ALLOWED_HOSTS = [
     host.strip()
-    for host in os.getenv('ALLOWED_HOSTS', 'localhost,127.0.0.1').split(',')
+    for host in os.getenv(
+        'ALLOWED_HOSTS',
+        'localhost,127.0.0.1'
+    ).split(',')
     if host.strip()
 ]
 
@@ -84,7 +87,6 @@ if DATABASE_URL:
         'default': dj_database_url.parse(DATABASE_URL)
     }
 else:
-    # Local development database
     DATABASES = {
         'default': {
             'ENGINE': 'django.db.backends.postgresql',
@@ -137,7 +139,6 @@ USE_TZ = True
 
 
 # Static files
-# Static files
 STATIC_URL = 'static/'
 STATIC_ROOT = BASE_DIR / 'staticfiles'
 
@@ -153,14 +154,23 @@ MAILERS = {
 # CORS
 CORS_ALLOWED_ORIGINS = [
     'http://localhost:5173',
+    'https://salescommissionerp-p-iota.vercel.app',
 ]
 
 CORS_ALLOW_CREDENTIALS = True
 
 
+# CSRF
 CSRF_TRUSTED_ORIGINS = [
     'http://localhost:5173',
+    'https://salescommissionerp-p-iota.vercel.app',
 ]
+
+SESSION_COOKIE_SAMESITE = 'None'
+SESSION_COOKIE_SECURE = True
+
+CSRF_COOKIE_SAMESITE = 'None'
+CSRF_COOKIE_SECURE = True
 
 
 # REST Framework
